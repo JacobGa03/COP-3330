@@ -189,10 +189,12 @@ public class FinalProject {
                     System.out.println("Enter the student info: ");
                     System.out.print("\t\tName of Student: ");
                     String name = scanner.nextLine();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals(" ")){
+                    name = name.trim();
+                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
                         System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
                         System.out.print("\t\tName of Student: ");
                         name = scanner.nextLine();
+                        name = name.trim();
                     }
                     name = name.trim();
                     String[] properFormatName = name.split(" ", 2);
@@ -202,17 +204,20 @@ public class FinalProject {
                     //ID
                     System.out.print("\t\tID: ");
                     String id = scanner.nextLine();
+                    id = id.trim();
                     boolean idCheck = false;
                     while(!idCheck){
-                        if(!properIDFormat(id) || id.equals(" ")){
+                        if(!properIDFormat(id) || id.equals("")){
                             System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else if(doesIdExist(list, id)){
                             System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else
                             idCheck = true;
@@ -273,10 +278,12 @@ public class FinalProject {
                     System.out.println("Enter the faculty info:");
                     System.out.print("\t\tName of facutly: ");
                     name = scanner.nextLine();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals(" ")){
+                    name = name.trim();
+                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
                         System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
                         System.out.print("\t\tName of facutly: ");
                         name = scanner.nextLine();
+                        name = name.trim();
                     }
                     name = name.trim();
                     properFormatName = name.split(" ", 2);
@@ -288,16 +295,19 @@ public class FinalProject {
                     System.out.print("\t\tID: ");
                     id = scanner.nextLine();
                     idCheck = false;
+                    id = id.trim();
                     while(!idCheck){
-                        if(!properIDFormat(id) || id.equals(" ")){
+                        if(!properIDFormat(id) || id.equals("")){
                             System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else if(doesIdExist(list, id)){
                             System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else
                             idCheck = true;
@@ -308,10 +318,11 @@ public class FinalProject {
                     System.out.print("\t\tRank: ");
                     String rank = scanner.nextLine();
                     rank = rank.trim();
-                    while(!(rank.toLowerCase().equals("professor")||rank.toLowerCase().equals("adjunct")) || rank.equals(" ")){
+                    while(!(rank.toLowerCase().equals("professor")||rank.toLowerCase().equals("adjunct")) || rank.equals("")){
                         System.out.println("\t\t\""+rank+"\" is invalid");
                         System.out.print("\t\tRank: ");
                         rank = scanner.nextLine();
+                        rank = rank.trim();
                     }
                     if(rank.equals("professor"))
                         rank = "Professor";
@@ -322,10 +333,11 @@ public class FinalProject {
                     System.out.print("\t\tDepartment: ");
                     String department = scanner.nextLine();
                     department = department.trim();
-                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals(" ")){
+                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
                         System.out.println("\t\t\""+department+"\" is invalid");
                         System.out.print("\t\tDepartment: ");
                         department = scanner.nextLine();
+                        department = department.trim();
                     }
                     if(department.equals("mathematics"))
                         department = "Mathematics";
@@ -344,10 +356,12 @@ public class FinalProject {
                     System.out.println("Enter the faculty info:");
                     System.out.print("\t\tName of the staff memeber: ");
                     name = scanner.nextLine();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals(" ")){
+                    name = name.trim();
+                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
                         System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
                         System.out.print("\t\tName of the staff memeber: ");
                         name = scanner.nextLine();
+                        name = name.trim();
                     }
                     name = name.trim();
                     properFormatName = name.split(" ", 2);
@@ -358,17 +372,20 @@ public class FinalProject {
                     //ID
                     System.out.print("\t\tID: ");
                     id = scanner.nextLine();
+                    id = id.trim();
                     idCheck = false;
                     while(!idCheck){
-                        if(!properIDFormat(id) || id.equals(" ")){
+                        if(!properIDFormat(id) || id.equals("")){
                             System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else if(doesIdExist(list, id)){
                             System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
                             System.out.print("\t\tID: ");
                             id = scanner.nextLine();
+                            id = id.trim();
                         }
                         else
                             idCheck = true;
@@ -379,10 +396,11 @@ public class FinalProject {
                     System.out.print("\t\tDepartment: ");
                     department = scanner.nextLine();
                     department = department.trim();
-                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals(" ")){
+                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
                         System.out.println("\t\t\""+department+"\" is invalid");
                         System.out.print("\t\tDepartment: ");
                         department = scanner.nextLine();
+                        department = department.trim();
                     }
                     if(department.equals("mathematics"))
                         department = "Mathematics";
@@ -395,10 +413,11 @@ public class FinalProject {
                     System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
                     String status = scanner.nextLine();
                     status = status.trim();
-                    while(!(status.toLowerCase().equals("p")||status.toLowerCase().equals("f"))|| status.equals(" ")){
+                    while(!(status.toLowerCase().equals("p")||status.toLowerCase().equals("f"))|| status.equals("")){
                         System.out.println("\t\t\""+status+"\" is invalid");
                         System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
                         status = scanner.nextLine();
+                        status = status.trim();
                     }
                     if(status.equals("f")){
                         status = "Full Time";
