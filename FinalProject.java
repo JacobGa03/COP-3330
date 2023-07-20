@@ -89,7 +89,7 @@ public class FinalProject {
                 //Used to display the correct ordinal number when printing faculty and staff
                 int numFound = 1;
 
-                file.write("\t\t\tReport created on " + dtf.format(now)+"\n\t\t\t***********************\n\n");
+                file.write("\t\t\tReport created on " + dtf.format(now)+"\n\t\t\t****************************\n\n");
                 
                 file.write("\tFaculty Members\n\t-------------------------\n");
                 for(int i = 0; i<list.size(); i++){
@@ -185,248 +185,33 @@ public class FinalProject {
 
         switch(typeOfPerson){
                 case "student":
-                    //Name
-                    System.out.println("Enter the student info: ");
-                    System.out.print("\t\tName of Student: ");
-                    String name = scanner.nextLine();
-                    name = name.trim();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
-                        System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
-                        System.out.print("\t\tName of Student: ");
-                        name = scanner.nextLine();
-                        name = name.trim();
-                    }
-                    name = name.trim();
-                    String[] properFormatName = name.split(" ", 2);
-                    properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
-                    properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
-                    name = properFormatName[0] + " " + properFormatName[1];
-                    //ID
-                    System.out.print("\t\tID: ");
-                    String id = scanner.nextLine();
-                    id = id.trim();
-                    boolean idCheck = false;
-                    while(!idCheck){
-                        if(!properIDFormat(id) || id.equals("")){
-                            System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else if(doesIdExist(list, id)){
-                            System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else
-                            idCheck = true;
-                    }
-                    id = id.trim();
-                    //GPA
-                    System.out.print("\t\tGPA: ");
-                    boolean gpaCheck = false;
-                    String grade = "";
-                    double gpa = 0;
+                    String[] personInfo = getPersonInfo(list, "Student");
 
-                    grade = scanner.nextLine();
-                    while(!gpaCheck){
+                    double[] studentInfo = getStudentInfo(list);
 
-                        try{
-                            gpa = Double.parseDouble(grade);
-                            if(gpa<0 || gpa>4)
-                                throw new NumberFormatException();
-
-                            gpaCheck = true;
-                        }
-                        catch(NumberFormatException nfe){
-                            System.out.println("\t\tInvalid GPA entered. Make sure you enter a decimal number.");
-                            System.out.print("\t\tGPA: ");
-                            grade = scanner.nextLine();
-                        }
-                    }
-                    //Credit Hours
-                    System.out.print("\t\tCredit Hours: ");
-                    boolean credCheck = false;
-                    String credHours = "";
-                    int creditHours = 0;
-
-                    credHours = scanner.nextLine();
-                    while(!credCheck){
-
-                        try{
-                            creditHours = Integer.parseInt(credHours);
-                            if(creditHours<0)
-                                throw new NumberFormatException();
-
-                            credCheck = true;
-                        }
-                        catch(NumberFormatException nfe){
-                            System.out.println("Invalid Input. Please make sure you enter a non-negative whole number.");
-                            System.out.print("\t\tCredit Hours: ");
-                            credHours = scanner.nextLine();
-                        }
-                    }
                     //Add the student to the list
-                    list.add(new Student(name,id,gpa,creditHours));
-                    stuList.add(new Student(name,id,gpa,creditHours));
+                    list.add(new Student(personInfo[0],personInfo[1],studentInfo[0],(int) studentInfo[1]));
+                    stuList.add(new Student(personInfo[0],personInfo[1],studentInfo[0],(int) studentInfo[1]));
                     System.out.println("Student added!");
                     break;
 
                 case "faculty":
-                    //Name
-                    System.out.println("Enter the faculty info:");
-                    System.out.print("\t\tName of facutly: ");
-                    name = scanner.nextLine();
-                    name = name.trim();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
-                        System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
-                        System.out.print("\t\tName of facutly: ");
-                        name = scanner.nextLine();
-                        name = name.trim();
-                    }
-                    name = name.trim();
-                    properFormatName = name.split(" ", 2);
-                    properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
-                    properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
-                    name = properFormatName[0]+ " " + properFormatName[1];
-                    
-                    //ID
-                    System.out.print("\t\tID: ");
-                    id = scanner.nextLine();
-                    idCheck = false;
-                    id = id.trim();
-                    while(!idCheck){
-                        if(!properIDFormat(id) || id.equals("")){
-                            System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else if(doesIdExist(list, id)){
-                            System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else
-                            idCheck = true;
-                    }
-                    id = id.trim();
+                    personInfo = getPersonInfo(list, "Faculty");
 
-                    //Rank
-                    System.out.print("\t\tRank: ");
-                    String rank = scanner.nextLine();
-                    rank = rank.trim();
-                    while(!(rank.toLowerCase().equals("professor")||rank.toLowerCase().equals("adjunct")) || rank.equals("")){
-                        System.out.println("\t\t\""+rank+"\" is invalid");
-                        System.out.print("\t\tRank: ");
-                        rank = scanner.nextLine();
-                        rank = rank.trim();
-                    }
-                    if(rank.equals("professor"))
-                        rank = "Professor";
-                    else
-                        rank = "Adjunct";
-
-                    //Deparment
-                    System.out.print("\t\tDepartment: ");
-                    String department = scanner.nextLine();
-                    department = department.trim();
-                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
-                        System.out.println("\t\t\""+department+"\" is invalid");
-                        System.out.print("\t\tDepartment: ");
-                        department = scanner.nextLine();
-                        department = department.trim();
-                    }
-                    if(department.equals("mathematics"))
-                        department = "Mathematics";
-                    else if(department.equals("engineering"))
-                        department = "Engineering";
-                    else
-                        department = "English";
+                    String[] facultyInfo = getEmployeeInfo(list, "faculty");
 
                     //Add the faculty member to the list
-                    list.add(new Faculty(name,id,department,rank));
+                    list.add(new Faculty(personInfo[0],personInfo[1],facultyInfo[0],facultyInfo[1]));
                     System.out.println("Faculty added!");
                     break;
 
                 case "staff":
-                    //Name
-                    System.out.println("Enter the faculty info:");
-                    System.out.print("\t\tName of the staff memeber: ");
-                    name = scanner.nextLine();
-                    name = name.trim();
-                    while(!name.matches("[a-zA-Z ]+") || name.equals("")){
-                        System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
-                        System.out.print("\t\tName of the staff memeber: ");
-                        name = scanner.nextLine();
-                        name = name.trim();
-                    }
-                    name = name.trim();
-                    properFormatName = name.split(" ", 2);
-                    properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
-                    properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
-                    name = properFormatName[0] + " " + properFormatName[1];
+                    personInfo = getPersonInfo(list, "Staff");
                     
-                    //ID
-                    System.out.print("\t\tID: ");
-                    id = scanner.nextLine();
-                    id = id.trim();
-                    idCheck = false;
-                    while(!idCheck){
-                        if(!properIDFormat(id) || id.equals("")){
-                            System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else if(doesIdExist(list, id)){
-                            System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
-                            System.out.print("\t\tID: ");
-                            id = scanner.nextLine();
-                            id = id.trim();
-                        }
-                        else
-                            idCheck = true;
-                    }
-                    id = id.trim();
-                    
-                    //Deparment
-                    System.out.print("\t\tDepartment: ");
-                    department = scanner.nextLine();
-                    department = department.trim();
-                    while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
-                        System.out.println("\t\t\""+department+"\" is invalid");
-                        System.out.print("\t\tDepartment: ");
-                        department = scanner.nextLine();
-                        department = department.trim();
-                    }
-                    if(department.equals("mathematics"))
-                        department = "Mathematics";
-                    else if(department.equals("engineering"))
-                        department = "Engineering";
-                    else
-                        department = "English";
-
-                    //Status
-                    System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
-                    String status = scanner.nextLine();
-                    status = status.trim();
-                    while(!(status.toLowerCase().equals("p")||status.toLowerCase().equals("f"))|| status.equals("")){
-                        System.out.println("\t\t\""+status+"\" is invalid");
-                        System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
-                        status = scanner.nextLine();
-                        status = status.trim();
-                    }
-                    if(status.equals("f")){
-                        status = "Full Time";
-                    }
-                    else
-                        status = "Part Time";
+                    String[] staffInfo = getEmployeeInfo(list, "staff");
 
                     //Add the faculty member to the list
-                    list.add(new Staff(name,id,department,status));
+                    list.add(new Staff(personInfo[0],personInfo[1],staffInfo[0],staffInfo[1]));
                     System.out.println("Staff member added!");
                     break;
                     
@@ -499,6 +284,191 @@ public class FinalProject {
         }
     }
 
+    //Collects the info for the person object
+    public static String[] getPersonInfo(ArrayList<Person> list, String type){
+        String[] personInfo = new String[2];
+
+        //Name
+        System.out.println("Enter the " + type + " Info: ");
+        System.out.print("\t\tName of "+ type+ ": ");
+        String name = scanner.nextLine();
+        name = name.trim();
+
+        while(!name.matches("[a-zA-Z ]+") || name.equals("")){
+            System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
+            System.out.print("\t\tName of Student: ");
+            name = scanner.nextLine();
+            name = name.trim();
+        }
+
+        name = name.trim();
+        String[] properFormatName = name.split(" ");
+        properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
+        properFormatName[0] = properFormatName[0].replace(properFormatName[0].substring(1), properFormatName[0].substring(1).toLowerCase());
+        properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
+        properFormatName[1] = properFormatName[1].replace(properFormatName[1].substring(1), properFormatName[1].substring(1).toLowerCase());
+        name = properFormatName[0] + " " + properFormatName[1];
+
+        //ID
+        System.out.print("\t\tID: ");
+        String id = scanner.nextLine();
+        id = id.trim();
+        boolean idCheck = false;
+        while(!idCheck){
+            if(!properIDFormat(id) || id.equals("")){
+                System.out.println("\t\tInvalid ID format. Must be LetterLetterDigitDigitDigitDigit");
+                System.out.print("\t\tID: ");
+                id = scanner.nextLine();
+                id = id.trim();
+            }
+            else if(doesIdExist(list, id)){
+                System.out.println("\t\tInvalid ID. The ID entered already exists in the database.");
+                System.out.print("\t\tID: ");
+                id = scanner.nextLine();
+                id = id.trim();
+            }
+            else
+                idCheck = true;
+            }
+            id = id.trim();
+        //Input the information into the array
+        personInfo[0] = name;
+        personInfo[1] = id;
+
+        return personInfo;
+    }
+
+    public static double[] getStudentInfo(ArrayList<Person> list){
+        double[] studentInfo = new double[2];
+
+        System.out.print("\t\tGPA: ");
+            boolean gpaCheck = false;
+            String grade = "";
+            double gpa = 0;
+
+            grade = scanner.nextLine();
+            while(!gpaCheck){
+
+                try{
+                    gpa = Double.parseDouble(grade);
+                    if(gpa<0 || gpa>4)
+                        throw new NumberFormatException();
+
+                    gpaCheck = true;
+                }
+                catch(NumberFormatException nfe){
+                    System.out.println("\t\tInvalid GPA entered. Make sure you enter a decimal number.");
+                    System.out.print("\t\tGPA: ");
+                    grade = scanner.nextLine();
+                }
+            }
+            //Credit Hours
+            System.out.print("\t\tCredit Hours: ");
+            boolean credCheck = false;
+            String credHours = "";
+            int creditHours = 0;
+
+            credHours = scanner.nextLine();
+            while(!credCheck){
+
+                try{
+                    creditHours = Integer.parseInt(credHours);
+                    if(creditHours<0)
+                        throw new NumberFormatException();
+
+                    credCheck = true;
+                }
+                catch(NumberFormatException nfe){
+                    System.out.println("Invalid Input. Please make sure you enter a non-negative whole number.");
+                    System.out.print("\t\tCredit Hours: ");
+                    credHours = scanner.nextLine();
+                }
+            }
+
+        studentInfo[0] = gpa;
+        studentInfo[1] = (double) creditHours;
+
+        return studentInfo;
+    }
+    //Gets information for the Employee object, takes in the type of employee to create the different type of employees
+    public static String[] getEmployeeInfo(ArrayList<Person> list, String typeOfEmployee){
+        String[] employeeInfo = new String[2];
+
+        if(typeOfEmployee.equals("faculty")){
+            System.out.print("\t\tRank: ");
+            String rank = scanner.nextLine();
+            rank = rank.trim();
+            while(!(rank.toLowerCase().equals("professor")||rank.toLowerCase().equals("adjunct")) || rank.equals("")){
+                System.out.println("\t\t\""+rank+"\" is invalid");
+                System.out.print("\t\tRank: ");
+                rank = scanner.nextLine();
+                rank = rank.trim();
+            }
+            if(rank.equals("professor"))
+                rank = "Professor";
+            else
+                rank = "Adjunct";
+
+            //Deparment
+            System.out.print("\t\tDepartment: ");
+            String department = scanner.nextLine();
+            department = department.trim();
+            while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
+                System.out.println("\t\t\""+department+"\" is invalid");
+                System.out.print("\t\tDepartment: ");
+                department = scanner.nextLine();
+                department = department.trim();
+            }
+            if(department.equals("mathematics"))
+                department = "Mathematics";
+            else if(department.equals("engineering"))
+                department = "Engineering";
+            else
+                department = "English";
+
+            employeeInfo[0] = department;
+            employeeInfo[1] = rank;
+
+        }
+        else if(typeOfEmployee.equals("staff")){
+            System.out.print("\t\tDepartment: ");
+            String department = scanner.nextLine();
+            department = department.trim();
+            while(!((department.toLowerCase().equals("mathematics"))||(department.toLowerCase().equals("engineering"))||(department.toLowerCase().equals("english")))|| department.equals("")){
+                System.out.println("\t\t\""+department+"\" is invalid");
+                System.out.print("\t\tDepartment: ");
+                department = scanner.nextLine();
+                department = department.trim();
+            }
+            if(department.equals("mathematics"))
+                department = "Mathematics";
+            else if(department.equals("engineering"))
+                department = "Engineering";
+            else
+                department = "English";
+
+            //Status
+            System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
+            String status = scanner.nextLine();
+            status = status.trim();
+            while(!(status.toLowerCase().equals("p")||status.toLowerCase().equals("f"))|| status.equals("")){
+                System.out.println("\t\t\""+status+"\" is invalid");
+                System.out.print("\t\tStatus, Enter P for Part Time, or Enter F for Full Time: ");
+                status = scanner.nextLine();
+                status = status.trim();
+            }
+            if(status.equals("f")){
+                status = "Full Time";
+            }
+            else
+                status = "Part Time";
+
+            employeeInfo[0] = department;
+            employeeInfo[1] = status;
+        }
+
+        return employeeInfo;
+    }
 }
 //---------------------------
 abstract class Person{
@@ -530,16 +500,19 @@ abstract class Person{
     public void setId(String id) {
         this.id = id;
     }
-    
-    public abstract void print();
 
-    public String[] formatName(String name){
+    //Takes in the name of the person and makes sure that capitlization is correct
+    public String formatName(String name){
         String[] properFormatName = name.split(" ", 2);
         properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
+        properFormatName[0] = properFormatName[0].replace(properFormatName[0].substring(1,properFormatName[0].length()), properFormatName[0].substring(1,properFormatName[0].length()).toLowerCase());
         properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
+        properFormatName[1] = properFormatName[1].replace(properFormatName[1].substring(1,properFormatName[1].length()), properFormatName[1].substring(1,properFormatName[0].length()).toLowerCase());
 
-        return properFormatName;
+        return properFormatName[0] + " " + properFormatName[1];
     }
+        
+    public abstract void print();
 }
 //---------------------------
 class Student extends Person{
@@ -583,10 +556,10 @@ class Student extends Person{
             goodGPA = 1;
         
         String[] money = formatMoney(goodGPA, this.numberOfCreditHours);
-        String[] properName = formatName(this.getName());
+        String properName = formatName(this.getName());
         
         System.out.println("Here is the tuition invoice for " + this.getName() +":\n\n---------------------------------------------------------------------------");
-        System.out.println(properName[0] +" " + properName[1] +"\t\t\t"+this.getId());
+        System.out.println(properName+"\t\t\t"+this.getId());
         System.out.println("Credit Hours: "+this.numberOfCreditHours+" ($236.45/credit hour)");
         System.out.println("Fees: $52\n\n");
         System.out.println("Total payment (after discount): $" +(money[0])+"\t\t($"+(money[1])+" discount applied)");
@@ -660,10 +633,10 @@ class Faculty extends Employee{
 
     @Override
     public void print(){
-        String[] properName = formatName(this.getName());
+        String properName= formatName(this.getName());
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println(properName[0] + " " + properName[1] +"\t\t\t"+this.getId());
+        System.out.println(properName +"\t\t\t"+this.getId());
         System.out.println(this.getDepartment()+ " Department, "+ this.getRank());
         System.out.println("---------------------------------------------------------------------------");
     }
@@ -692,10 +665,10 @@ class Staff extends Employee{
 
     @Override
     public void print(){
-        String[] properName = formatName(this.getName());
+        String properName = formatName(this.getName());
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println(properName[0] +" " + properName[1] +"\t\t\t"+this.getId());
+        System.out.println(properName +"\t\t\t"+this.getId());
         System.out.println(this.getDepartment()+ " Department, "+ getFullStatus(this.getStatus()));
         System.out.println("---------------------------------------------------------------------------");
     }
