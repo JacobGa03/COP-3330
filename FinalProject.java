@@ -55,8 +55,14 @@ public class FinalProject {
         System.out.println("\n\n");
 
         System.out.println("Would you like to create the report? (Y/N): ");
+        String createRep = scanner.nextLine().toLowerCase();
 
-        if(scanner.nextLine().toLowerCase().equals("y")){
+        while(!(createRep.equals("y")||createRep.equals("n"))){
+            System.out.println("Sorry, that is not a valid response. Please try again.");
+            createRep = scanner.nextLine().toLowerCase();
+        }
+
+        if(createRep.equals("y")){
             System.out.print("Would like to sort your students by descending gpa or name (1 for gpa, 2 for name): ");
 
             boolean sortCheck = false;
@@ -186,7 +192,6 @@ public class FinalProject {
         switch(typeOfPerson){
                 case "student":
                     String[] personInfo = getPersonInfo(list, "Student");
-
                     double[] studentInfo = getStudentInfo(list);
 
                     //Add the student to the list
@@ -197,7 +202,6 @@ public class FinalProject {
 
                 case "faculty":
                     personInfo = getPersonInfo(list, "Faculty");
-
                     String[] facultyInfo = getEmployeeInfo(list, "faculty");
 
                     //Add the faculty member to the list
@@ -207,7 +211,6 @@ public class FinalProject {
 
                 case "staff":
                     personInfo = getPersonInfo(list, "Staff");
-                    
                     String[] staffInfo = getEmployeeInfo(list, "staff");
 
                     //Add the faculty member to the list
