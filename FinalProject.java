@@ -296,16 +296,39 @@ public class FinalProject {
         System.out.print("\t\tName of "+ type+ ": ");
         String name = scanner.nextLine();
         name = name.trim();
-
-        while(!name.matches("[a-zA-Z ]+") || name.equals("")){
-            System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
-            System.out.print("\t\tName of Student: ");
-            name = scanner.nextLine();
-            name = name.trim();
+        boolean nameCheck = false;
+        String[] properFormatName = null;
+        
+        while(!nameCheck){
+            try{
+                
+                if(!name.matches("[a-zA-Z ]+") || name.equals(""))
+                    throw new Exception();
+            
+                properFormatName = name.split(" ");
+                
+                if(properFormatName.length==1)
+                    throw new ArrayIndexOutOfBoundsException();
+                nameCheck = true;
+            }
+            catch(ArrayIndexOutOfBoundsException aiobe){
+                System.out.println("\t\tInvalid Input. You should enter two names.");
+                System.out.print("\t\tName of "+type +": ");
+                name = scanner.nextLine();
+                name = name.trim();
+                nameCheck = false;
+            }
+            catch(Exception aiobe){
+                System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
+                System.out.print("\t\tName of "+type +": ");
+                name = scanner.nextLine();
+                name = name.trim();
+                nameCheck = false;
+            }
         }
 
         name = name.trim();
-        String[] properFormatName = name.split(" ");
+        //properFormatName = name.split(" ");
         properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
         properFormatName[0] = properFormatName[0].replace(properFormatName[0].substring(1), properFormatName[0].substring(1).toLowerCase());
         properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
@@ -355,12 +378,17 @@ public class FinalProject {
                 try{
                     gpa = Double.parseDouble(grade);
                     if(gpa<0 || gpa>4)
-                        throw new NumberFormatException();
+                        throw new Exception();
 
                     gpaCheck = true;
                 }
                 catch(NumberFormatException nfe){
                     System.out.println("\t\tInvalid GPA entered. Make sure you enter a decimal number.");
+                    System.out.print("\t\tGPA: ");
+                    grade = scanner.nextLine();
+                }
+                catch(Exception e){
+                    System.out.println("\t\tInvalid GPA entered. Make sure you enter a number between 0.0 and 4.0 (inclusive).");
                     System.out.print("\t\tGPA: ");
                     grade = scanner.nextLine();
                 }
@@ -503,17 +531,6 @@ abstract class Person{
     public void setId(String id) {
         this.id = id;
     }
-
-    //Takes in the name of the person and makes sure that capitlization is correct
-    public String formatName(String name){
-        String[] properFormatName = name.split(" ", 2);
-        properFormatName[0] = properFormatName[0].replace(properFormatName[0].charAt(0), Character.toUpperCase(properFormatName[0].charAt(0)));
-        properFormatName[0] = properFormatName[0].replace(properFormatName[0].substring(1,properFormatName[0].length()), properFormatName[0].substring(1,properFormatName[0].length()).toLowerCase());
-        properFormatName[1] = properFormatName[1].replace(properFormatName[1].charAt(0), Character.toUpperCase(properFormatName[1].charAt(0)));
-        properFormatName[1] = properFormatName[1].replace(properFormatName[1].substring(1,properFormatName[1].length()), properFormatName[1].substring(1,properFormatName[0].length()).toLowerCase());
-
-        return properFormatName[0] + " " + properFormatName[1];
-    }
         
     public abstract void print();
 }
@@ -559,10 +576,9 @@ class Student extends Person{
             goodGPA = 1;
         
         String[] money = formatMoney(goodGPA, this.numberOfCreditHours);
-        String properName = formatName(this.getName());
         
         System.out.println("Here is the tuition invoice for " + this.getName() +":\n\n---------------------------------------------------------------------------");
-        System.out.println(properName+"\t\t\t"+this.getId());
+        System.out.println(this.getName()+"\t\t\t"+this.getId());
         System.out.println("Credit Hours: "+this.numberOfCreditHours+" ($236.45/credit hour)");
         System.out.println("Fees: $52\n\n");
         System.out.println("Total payment (after discount): $" +(money[0])+"\t\t($"+(money[1])+" discount applied)");
@@ -636,10 +652,9 @@ class Faculty extends Employee{
 
     @Override
     public void print(){
-        String properName= formatName(this.getName());
-
+        
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println(properName +"\t\t\t"+this.getId());
+        System.out.println(this.getName() +"\t\t\t"+this.getId());
         System.out.println(this.getDepartment()+ " Department, "+ this.getRank());
         System.out.println("---------------------------------------------------------------------------");
     }
@@ -668,19 +683,10 @@ class Staff extends Employee{
 
     @Override
     public void print(){
-        String properName = formatName(this.getName());
-
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println(properName +"\t\t\t"+this.getId());
-        System.out.println(this.getDepartment()+ " Department, "+ getFullStatus(this.getStatus()));
+        System.out.println(this.getName() +"\t\t\t"+this.getId());
+        System.out.println(this.getDepartment()+ " Department, "+ this.getStatus());
         System.out.println("---------------------------------------------------------------------------");
-    }
-    
-    private String getFullStatus(String status){
-        if(status.equals("f"))
-            return "Full Time";
-        else
-            return "Part Time";
     }
 }
 //------------Comparators---------------
