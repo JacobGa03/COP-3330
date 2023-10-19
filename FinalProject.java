@@ -1,6 +1,5 @@
 //Final Project COP 3330
 //Jacob Gadberry, Kaelyn Gadberry, Layla Severance 
-//TA -
 import java.text.DecimalFormat;
 import java.util.*;
 import java.io.*;
@@ -237,14 +236,26 @@ public class FinalProject {
             System.out.println("No " + person + " matched!");
             return;
         }
+        //Create a temporary person object to see 
+        Person p;
+        if(person.equals("student")){
+            p = new Student();
+        }
+        else if(person.equals("faculty")){
+            p = new Faculty();
+        }
+        else{
+            p = new Staff();
+        }
 
         for(int i = 0; i<list.size(); i++){
-            if(list.get(i).getId().equals(id)){
-                //If we find the person, print them then break out of the 
+            if(list.get(i).getId().equals(id) && (list.get(i).getClass().equals(p.getClass()))){
+                //If we find the person, print them then break out of the loop
                 list.get(i).print();
                 return;
             }
         }
+        System.out.println("No " + person + " matched!");      
     }
     //Takes in both normal ArrayList and Student ArrayList and will remove a person based on the id given.
     //In addition, if the person found is of type 'Student', then that person will also be removed from the stuList as well
@@ -318,7 +329,7 @@ public class FinalProject {
                 name = name.trim();
                 nameCheck = false;
             }
-            catch(Exception aiobe){
+            catch(Exception e){
                 System.out.println("\t\tInvalid Input. Names should only contain alphabetical characters.");
                 System.out.print("\t\tName of "+type +": ");
                 name = scanner.nextLine();

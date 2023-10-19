@@ -1,0 +1,22 @@
+			Report created on 07/26/2023
+			****************************
+
+	Faculty Members
+	-------------------------
+		1. Jake Gad
+		ID: ja1234
+		English, Professor
+
+	Staff Members
+	-------------------------
+		1. Jack Back
+		ID: ja3456
+		English, Part Time
+
+	Students
+	-------------------------
+		1. Jake State
+		ID: ja2345
+		Gpa: 3.0
+		Credit Hours: 12
+
