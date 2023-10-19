@@ -1,0 +1,58 @@
+Inheritance - 2nd Corner Stone of OOP
+
+IS-A relationship - We can "pull" out commonalities between similar objects and create one "generic" object. This help reduce code redundency.
+
+*There is a difference between Composition, or HAS-A relationship
+	--> Bank Account
+Account				(Both of these are types of accounts)
+	--> Checking Account
+
+EX: Employee --> Hourly Employee & Salaried Employee
+	.Lets make a generic "Employee" class. 
+
+***This IS-A relationship is a one way street
+
+In order to actually use inheritance we use the keyword "extends" --> class Child extends Parent
+	.Here the child will inherit ALL public methods and data from its parent!!
+
+Constructing an Object that Inherits
+
+public Class(...., var data){
+	super(..);  //Calls the constructor from the parent (THIS MUST BE CALLED FIRST)
+	this.data = data; //Set the data from the child like a normal object
+}
+
+NOTE: if the super isn't there AND there was NO default constructor avaliable then there will be an error
+
+toString()
+
+.We can call the toString() of the parent class by using super.toString() (Very nice!!!)
+	-This helps with code redundency
+NOTE: if a super.toString() doesn't exist, then we just get the default Java toString()
+	
+	--->Salaried
+Employee--->Hourly	*All of these object extend the basic funcationality from Employee
+	-->Seasonal
+
+Employee s = new Salaried(...); <-- This works because of inheritance
+
+
+//Legal, but not recommended
+Object j = new Employee();
+---------------------------------
+There can be no "circular inheritance" a->b, b->c, c->a
+
+If super() is not called in the constuctor, then Java will go back and look for the "empty" Constructor from its parent class
+
+***The keyword "final" means that another class cannot inherit from it
+
+*ABSTRACT CLASSES ARE FOR INHERITANCE PURPOSES ONLY!!!*
+	.Think of it as a contract for different objects to follow
+	.It ensures that all objects that inherit the abstract have certain functionality
+
+
+if(e instanceof Manager && e !=null){}
+	.Our second condition is not needed since if the array element is NULL then the first statment will evluate to false
+
+
+*Having our array be of type Employee allows us to have every kind of person in the company on the list
