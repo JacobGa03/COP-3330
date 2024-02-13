@@ -1,6 +1,12 @@
-#Jacob Gadberry
 
-#Java Projects
+# COP 3330 (Intro to Object-Oriented Programming)
 
-#About
-This repository was made to store and showcase the different Java-based homework assignments I have completed while at the University of Central Florida
+Indexed in the folders below are all of the practice, homework, and exam prep programs for COP COP3330 (Intro to Object-Oriented Programming) for Summer '23 at the University of Central Florida. 
+
+## Authors
+
+- [@JacobGa03](https://github.com/JacobGa03)
+
+## About
+
+Each of the folders hold different practice programs and homework assignments for this class.
